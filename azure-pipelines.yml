@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
@@ -19,37 +14,26 @@ steps:
   displayName: 'Start Pipeline'
 
 - script: |
-    echo "Checking website..."
+    echo "===== CHECK WEBSITE ====="
+    echo "Website content:"
     cat index.html
   displayName: 'Check Website'
 
 - task: SSH@0
-  displayName: 'Debug Azure VM Connection'
+  displayName: 'Deploy to Azure VM'
   inputs:
     sshEndpoint: 'Azure-VM-SSH'
     runOptions: 'commands'
     commands: |
-      echo "===== CURRENT USER ====="
+      echo "===== CONNECTED TO AZURE VM ====="
       whoami
+      hostname
 
-      echo "===== CURRENT DIRECTORY ====="
-      pwd
+      echo "===== CREATE WEBSITE DIRECTORY ====="
+      mkdir -p /home/azureuser/rakesh-devops-site
 
-      echo "===== HOME DIRECTORY ====="
-      echo "HOME=$HOME"
-
-      echo "===== CURRENT DIRECTORY CONTENTS ====="
-      ls -la
-
-      echo "===== AZUREUSER HOME ====="
-      ls -la /home/azureuser
-
-      echo "===== WEBSITE DIRECTORY ====="
+      echo "===== DEPLOYMENT DIRECTORY ====="
       ls -la /home/azureuser/rakesh-devops-site
 
-      echo "===== GIT DIRECTORY ====="
-      ls -la /home/azureuser/rakesh-devops-site/.git
-
-      echo "===== GIT STATUS ====="
-      cd /home/azureuser/rakesh-devops-site
-      git status
+      echo "===== DEPLOYMENT READY ====="
+      echo "Azure VM connection successful"
