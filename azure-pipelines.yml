@@ -15,16 +15,22 @@ steps:
     echo "================================"
     echo "Rakesh DevOps CI/CD Pipeline"
     echo "================================"
-    echo "Pipeline started successfully"
+    echo "Build started"
   displayName: 'Start Pipeline'
 
 - script: |
-    echo "Checking website files..."
-    ls -la
-    echo "Website content:"
+    echo "Checking website..."
     cat index.html
   displayName: 'Check Website'
 
-- script: |
-    echo "Build completed successfully"
-  displayName: 'Build Application'
+- task: SSH@0
+  inputs:
+    sshEndpoint: 'Azure-VM-SSH'
+    runOptions: 'commands'
+    commands: |
+      cd ~/rakesh-devops-site
+      git pull origin main
+      sudo cp index.html /var/www/html/index.html
+      echo "Deployment completed"
+      curl http://localhost
+  displayName: 'Deploy to Azure VM'
