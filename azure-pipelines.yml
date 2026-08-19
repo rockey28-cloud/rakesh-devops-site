@@ -24,13 +24,32 @@ steps:
   displayName: 'Check Website'
 
 - task: SSH@0
-  displayName: 'Deploy to Azure VM'
+  displayName: 'Debug Azure VM Connection'
   inputs:
     sshEndpoint: 'Azure-VM-SSH'
     runOptions: 'commands'
     commands: |
+      echo "===== CURRENT USER ====="
+      whoami
+
+      echo "===== CURRENT DIRECTORY ====="
+      pwd
+
+      echo "===== HOME DIRECTORY ====="
+      echo "HOME=$HOME"
+
+      echo "===== CURRENT DIRECTORY CONTENTS ====="
+      ls -la
+
+      echo "===== AZUREUSER HOME ====="
+      ls -la /home/azureuser
+
+      echo "===== WEBSITE DIRECTORY ====="
+      ls -la /home/azureuser/rakesh-devops-site
+
+      echo "===== GIT DIRECTORY ====="
+      ls -la /home/azureuser/rakesh-devops-site/.git
+
+      echo "===== GIT STATUS ====="
       cd /home/azureuser/rakesh-devops-site
-      git pull origin main
-      sudo cp index.html /var/www/html/index.html
-      echo "Deployment completed"
-      curl http://localhost
+      git status
