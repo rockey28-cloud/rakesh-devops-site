@@ -24,13 +24,13 @@ steps:
   displayName: 'Check Website'
 
 - task: SSH@0
+  displayName: 'Deploy to Azure VM'
   inputs:
     sshEndpoint: 'Azure-VM-SSH'
     runOptions: 'commands'
     commands: |
-      cd ~/rakesh-devops-site
+      cd /home/azureuser/rakesh-devops-site
       git pull origin main
       sudo cp index.html /var/www/html/index.html
       echo "Deployment completed"
       curl http://localhost
-  displayName: 'Deploy to Azure VM'
