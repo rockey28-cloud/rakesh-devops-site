@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+- script: |
+    echo "================================"
+    echo "Rakesh DevOps CI/CD Pipeline"
+    echo "================================"
+    echo "Pipeline started successfully"
+  displayName: 'Start Pipeline'
+
+- script: |
+    echo "Checking website files..."
+    ls -la
+    echo "Website content:"
+    cat index.html
+  displayName: 'Check Website'
+
+- script: |
+    echo "Build completed successfully"
+  displayName: 'Build Application'
