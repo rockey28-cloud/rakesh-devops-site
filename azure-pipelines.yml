@@ -29,11 +29,19 @@ steps:
       whoami
       hostname
 
-      echo "===== CREATE WEBSITE DIRECTORY ====="
-      mkdir -p /home/azureuser/rakesh-devops-site
+      echo "===== GO TO PROJECT DIRECTORY ====="
+      cd /home/azureuser/rakesh-devops-site
 
-      echo "===== DEPLOYMENT DIRECTORY ====="
-      ls -la /home/azureuser/rakesh-devops-site
+      echo "===== PULL LATEST CODE FROM GITHUB ====="
+      git pull origin main
 
-      echo "===== DEPLOYMENT READY ====="
-      echo "Azure VM connection successful"
+      echo "===== CURRENT WEBSITE VERSION ====="
+      grep "<h1>" index.html
+
+      echo "===== CHECK NGINX ====="
+      sudo systemctl is-active nginx
+
+      echo "===== TEST WEBSITE ====="
+      curl -s http://localhost
+
+      echo "===== DEPLOYMENT SUCCESSFUL ====="
